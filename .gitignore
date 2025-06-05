@@ -1,4 +1,13 @@
-build
-node_modules
-.idea
-.env
+/frontend/node_modules/
+/frontend/build/
+
+node_modules/
+build/
+dist/
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
