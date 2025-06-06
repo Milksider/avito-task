@@ -1,41 +1,39 @@
 .header {
-  background-color: gray;
-  padding: 20px 0;
-  &__inner {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    justify-content: space-between;
-  }
-  &__logo {
-    width: 50px;
-    height: 50px;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  border-bottom: 2px orange solid;
+  background-color: transparent;
+  padding: 20px;
+  border-bottom: 1px solid gray;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
 }
 
 .navList {
   display: flex;
   gap: 8px;
-  justify-content: center;
-}
-
-.nav {
-  align-self: center;
 }
 
 .navLink {
   color: var(--color-white);
   font-weight: 500;
+
   &_active {
     border-bottom: 1px solid #fff;
   }
 }
 
 .navItem {
+  list-style: none;
+
   & + .navItem {
     border-left: 1px solid #fff;
     padding-left: 8px;
   }
+}
+
+.createTask {
+  background: transparent;
+  cursor: pointer;
+  border: none;
 }
