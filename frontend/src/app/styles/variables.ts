@@ -16,3 +16,17 @@ export const BREAKPOINTS = {
     xl: 1200,
     '2xl': 1400
 };
+
+export const loading = {
+    animation: 'spin 1s linear infinite',
+    color: fontColor,
+    alignSelf: 'center',
+    '@keyframes spin': {
+        '0%': {
+            transform: 'rotate(0deg)',
+        },
+        '100%': {
+            transform: 'rotate(360deg)',
+        },
+    },
+};

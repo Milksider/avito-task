@@ -3,7 +3,9 @@ import { fontColor, lightBg } from '@/app/styles/variables';
 export const page = {
     width: '100%',
     overflowX: 'auto',
-    scrollbarWidth: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
 }
 
 export const wrapper = {

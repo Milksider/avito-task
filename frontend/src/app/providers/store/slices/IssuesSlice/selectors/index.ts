@@ -5,11 +5,13 @@ import { StateSchema } from '@/app/providers/store/StateSchema';
 
 export const selectAllIssues = getIssues.selectAll;
 
-export const selectFilterStatus= (state: StateSchema) => state.issueSlice.filterStatus;
+export const selectFilterStatus = (state: StateSchema) => state.issueSlice.filterStatus;
 
 export const selectFilterBoard = (state: StateSchema) => state.issueSlice.filterBoard;
 
 export const selectSearchQuery = (state: StateSchema) => state.issueSlice.searchQuery;
+
+export const selectIsLoading = (state: StateSchema) => state.issueSlice.isLoading;
 
 export const selectFilters = (state: { issueSlice: IssuesSlice }) => ({
     searchQuery: state.issueSlice.searchQuery,

@@ -1,6 +1,7 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { getBoardIssues } from '@/app/providers/store/slices/BoardIssuesSlice/boardIssuesSlice';
 import { IssueStatus } from '@/app/types/global';
+import { StateSchema } from '@/app/providers/store/StateSchema';
 
 const selectAllBoardIssues = getBoardIssues.selectAll;
 
@@ -21,3 +22,5 @@ export const selectFilteredIssues = createSelector(
         });
     }
 );
+
+export const selectIsLoading = (state: StateSchema) => state.boardIssuesSlice.isLoading;

@@ -7,16 +7,19 @@ import { useSelector } from 'react-redux';
 import { setChangeIssueStatus } from '@/app/providers/store/slices/BoardIssuesSlice/boardIssuesSlice';
 import { fetchIssuesByBoard } from '@/app/providers/store/slices/BoardIssuesSlice/api/fetchIssuesByBoard';
 import { Issue } from '@/widgets/Issue';
-import { selectFilteredIssues } from '@/app/providers/store/slices/BoardIssuesSlice/selectors';
+import { selectFilteredIssues, selectIsLoading } from '@/app/providers/store/slices/BoardIssuesSlice/selectors';
 import { IssueStatus } from '@/app/types/global';
 import { changeIssueStatus } from '@/app/api/issues';
 import { toggleCreateIssueModal } from '@/app/providers/store/slices/CreateIssueModalSlice/createIssueModalSlice';
 import { Issue as IssueType } from '@/app/types';
 import { useGetBoardById } from '@/app/hooks/useGetBoardById';
+import LoopIcon from '@mui/icons-material/Loop';
+import { loading } from '@/app/styles/variables';
 
 const BoardDetailPage = () => {
     const [currentBoard, setCurrentBoard] = useState(null);
     const [currentIssue, setCurrentIssue] = useState(null);
+    const isLoading = useSelector(selectIsLoading);
 
     const { id } = useParams<{ id: string }>();
     const dispatch = useAppDispatch();
@@ -83,61 +86,63 @@ const BoardDetailPage = () => {
     return (
         <Box sx={styles.page}>
             <Box component='h1' sx={styles.title}>{boardData?.name}</Box>
-            <Box sx={styles.wrapper}>
-                {Object.keys(filteredIssues)
-                    .map((statusKey) => {
-                        const status = statusKey as IssueStatus;
-                        const boardName = boardData?.name;
-                        const boardId = boardData?.id;
+            {isLoading ? <LoopIcon sx={loading} /> :
+                <Box sx={styles.wrapper}>
+                    {Object.keys(filteredIssues)
+                        .map((statusKey) => {
+                            const status = statusKey as IssueStatus;
+                            const boardName = boardData?.name;
+                            const boardId = boardData?.id;
 
-                        return (
-                            <Box
-                                onDragOver={onDragOver}
-                                onDrop={(event) => dropIssueHandler(event, status)}
-                                sx={styles.board}
-                            >
-                                <h3>{status}</h3>
-                                <Box sx={styles.column}>
-                                    {filteredIssues[status].map(({
-                                        id,
-                                        description,
-                                        status,
-                                        title,
-                                        priority,
-                                        assignee,
-                                    }) => (
-                                        <Issue
-                                            key={id}
-                                            boardId={boardId}
-                                            description={description}
-                                            title={title}
-                                            assignee={assignee}
-                                            boardName={boardName}
-                                            id={id}
-                                            priority={priority}
-                                            status={status}
-                                            onDragOver={onDragOver}
-                                            onDragLeave={onDragLeave}
-                                            onDragStart={onDragStart}
-                                            onDragEnd={onDragEnd}
-                                            onDrop={onDrop}
-                                            onClick={() => onIssueCLick({
-                                                boardId,
-                                                boardName,
-                                                id,
-                                                description,
-                                                status,
-                                                title,
-                                                priority,
-                                                assignee,
-                                            })}
-                                        />
-                                    ))}
+                            return (
+                                <Box
+                                    onDragOver={onDragOver}
+                                    onDrop={(event) => dropIssueHandler(event, status)}
+                                    sx={styles.board}
+                                >
+                                    <h3>{status}</h3>
+                                    <Box sx={styles.column}>
+                                        {filteredIssues[status].map(({
+                                            id,
+                                            description,
+                                            status,
+                                            title,
+                                            priority,
+                                            assignee,
+                                        }) => (
+                                            <Issue
+                                                key={id}
+                                                boardId={boardId}
+                                                description={description}
+                                                title={title}
+                                                assignee={assignee}
+                                                boardName={boardName}
+                                                id={id}
+                                                priority={priority}
+                                                status={status}
+                                                onDragOver={onDragOver}
+                                                onDragLeave={onDragLeave}
+                                                onDragStart={onDragStart}
+                                                onDragEnd={onDragEnd}
+                                                onDrop={onDrop}
+                                                onClick={() => onIssueCLick({
+                                                    boardId,
+                                                    boardName,
+                                                    id,
+                                                    description,
+                                                    status,
+                                                    title,
+                                                    priority,
+                                                    assignee,
+                                                })}
+                                            />
+                                        ))}
+                                    </Box>
                                 </Box>
-                            </Box>
-                        );
-                    })}
-            </Box>
+                            );
+                        })}
+                </Box>
+            }
         </Box>
     );
 };

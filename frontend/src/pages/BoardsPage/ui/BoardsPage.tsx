@@ -6,10 +6,14 @@ import { fetchBoardsList } from '@/app/providers/store/slices/BoardsSlice/api/fe
 import { useSelector } from 'react-redux';
 import { getBoards } from '@/app/providers/store/slices/BoardsSlice/boardsSlice';
 import { Board } from './Board';
+import LoopIcon from '@mui/icons-material/Loop';
+import { loading } from '@/app/styles/variables';
+import { selectIsLoading } from '@/app/providers/store/slices/BoardsSlice/selectors';
 
 const BoardsPage = () => {
     const dispatch = useAppDispatch();
     const boards = useSelector(getBoards.selectAll);
+    const isLoading = useSelector(selectIsLoading);
 
     useEffect(() => {
         dispatch(fetchBoardsList({}))
@@ -17,6 +21,7 @@ const BoardsPage = () => {
 
     return (
         <Box sx={styles.wrapper}>
+            {isLoading && <LoopIcon sx={loading} />}
             {boards.map(({id,name,description,taskCount}) =>
                 <Board
                     key={id}
