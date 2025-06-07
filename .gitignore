@@ -2,7 +2,6 @@
 /frontend/build/
 
 node_modules/
-build/
 dist/
 *.log
 *.tmp
