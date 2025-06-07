@@ -21,7 +21,7 @@ export const Header = () => {
                 <Box>
                     <Box component='nav' sx={styles.nav}>
                         <Box component='ul' sx={styles.navList}>
-                            <Box component='li' sx={styles.navItem(true)}>
+                            <Box component='li' sx={styles.navItem()}>
                                 <NavLink
                                     to='/issues'
                                     style={({ isActive }) => ({
@@ -31,7 +31,7 @@ export const Header = () => {
                                     Список задач
                                 </NavLink>
                             </Box>
-                            <Box component='li' sx={styles.navItem(true)}>
+                            <Box component='li' sx={styles.navItem()}>
                                 <NavLink
                                     to='/boards'
                                     style={({ isActive }) => ({

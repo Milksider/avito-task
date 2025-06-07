@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { routerConfig } from '../../../../config/router';
 import { CreateTaskModal } from '@/widgets/CreateTaskModal';
 import { useSelector } from 'react-redux';
@@ -26,6 +26,8 @@ export const AppRouter = () => {
                             />
                         ))
                 }
+                {/* Редирект с главной, поскольку главная не используется */}
+                <Route path="/" element={<Navigate to="/issues" replace />} />
             </Routes>
         </Suspense>
     )
