@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { getBoards } from '@/app/providers/store/slices/BoardsSlice/boardsSlice';
 import { Board } from './Board';
 
-export const BoardsPage = () => {
+const BoardsPage = () => {
     const dispatch = useAppDispatch();
     const boards = useSelector(getBoards.selectAll);
 
@@ -29,3 +29,5 @@ export const BoardsPage = () => {
         </Box>
     );
 };
+
+export default BoardsPage;

@@ -5,6 +5,6 @@ export interface IssuesSlice extends EntityState<Issue, number>{
     isLoading: boolean;
     isError: boolean;
     searchQuery: string;
-    filterPriority: '',
+    filterStatus: '',
     filterBoard: null,
 }

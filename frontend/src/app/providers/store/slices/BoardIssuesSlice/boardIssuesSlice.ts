@@ -32,6 +32,18 @@ const boardIssuesSlice = createSlice({
                 changes: { status: newStatus },
             });
         },
+        addIssueOnBoard: (state, action: PayloadAction<Issue>) => {
+            console.log(action.payload);
+            boardIssuesAdapter.addOne(state, action.payload);
+            state.ids = [action.payload.id, ...state.ids.filter(id => id !== action.payload.id)];
+        },
+        updateIssueOnBoard: (state, action: PayloadAction<Issue>) => {
+            const {boardId,boardName,status,priority,description,title,assignee} = action.payload;
+            boardIssuesAdapter.updateOne(state, {
+                id: action.payload.id,
+                changes: {boardId,boardName,status,priority,description,title,assignee},
+            });
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -56,6 +68,8 @@ const boardIssuesSlice = createSlice({
 
 export const {
     setChangeIssueStatus,
+    addIssueOnBoard,
+    updateIssueOnBoard,
 } = boardIssuesSlice.actions;
 
 export default boardIssuesSlice.reducer;

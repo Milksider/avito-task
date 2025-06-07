@@ -7,31 +7,48 @@ import { useSelector } from 'react-redux';
 import { selectFilteredIssues } from '@/app/providers/store/slices/IssuesSlice/selectors';
 import { SearchPanel } from '@/pages/IssuesPage/ui/SearchPanel/ui/SearchPanel';
 import { Issue } from '@/widgets/Issue';
+import { toggleCreateIssueModal } from '@/app/providers/store/slices/CreateIssueModalSlice/createIssueModalSlice';
+import { Issue as IssueType } from '@/app/types';
 
 const IssuesPage = () => {
     const dispatch = useAppDispatch();
     const issues = useSelector(selectFilteredIssues);
+
+    const openCreateIssueModal = (issueData: IssueType) => {
+        dispatch(toggleCreateIssueModal({
+            isOpen: true,
+            issueData: issueData,
+        }))
+    }
+
+    const onIssueClick = (issueData: IssueType) => {
+        openCreateIssueModal(issueData)
+    }
 
     useEffect(() => {
         dispatch(fetchIssuesList({}))
     }, [dispatch, fetchIssuesList]);
 
     return (
-        <Box>
+        <Box sx={styles.wrapper}>
             <SearchPanel />
             <Box sx={styles.issuesWrapper}>
                 {issues.map(({boardId,boardName,id,description,status,title,priority,assignee}) =>
-                    <Issue
-                        key={id}
-                        boardId={boardId}
-                        description={description}
-                        title={title}
-                        assignee={assignee}
-                        boardName={boardName}
-                        id={id}
-                        priority={priority}
-                        status={status}
-                    />
+                    <Box
+                        onClick={() => onIssueClick({boardId,boardName,id,description,status,title,priority,assignee})}
+                    >
+                        <Issue
+                            key={id}
+                            boardId={boardId}
+                            description={description}
+                            title={title}
+                            assignee={assignee}
+                            boardName={boardName}
+                            id={id}
+                            priority={priority}
+                            status={status}
+                        />
+                    </Box>
                 )}
             </Box>
         </Box>

@@ -5,7 +5,7 @@ import { StateSchema } from '@/app/providers/store/StateSchema';
 
 export const selectAllIssues = getIssues.selectAll;
 
-export const selectFilterPriority = (state: StateSchema) => state.issueSlice.filterPriority;
+export const selectFilterStatus= (state: StateSchema) => state.issueSlice.filterStatus;
 
 export const selectFilterBoard = (state: StateSchema) => state.issueSlice.filterBoard;
 
@@ -13,14 +13,14 @@ export const selectSearchQuery = (state: StateSchema) => state.issueSlice.search
 
 export const selectFilters = (state: { issueSlice: IssuesSlice }) => ({
     searchQuery: state.issueSlice.searchQuery,
-    filterPriority: state.issueSlice.filterPriority,
+    filterStatus: state.issueSlice.filterStatus,
     filterBoard: state.issueSlice.filterBoard,
 });
 
 export const selectFilteredIssues = createSelector(
     [selectAllIssues, selectFilters],
     (issues, filters) => {
-        const { searchQuery, filterPriority, filterBoard } = filters;
+        const { searchQuery, filterStatus, filterBoard } = filters;
 
         return issues.filter(issue => {
             // Поиск
@@ -30,8 +30,8 @@ export const selectFilteredIssues = createSelector(
                 : true;
 
             // Фильтр по приоритету
-            const matchesPriority = filterPriority
-                ? issue.priority === filterPriority
+            const matchesPriority = filterStatus
+                ? issue.status === filterStatus
                 : true;
 
             // Фильтр по доске

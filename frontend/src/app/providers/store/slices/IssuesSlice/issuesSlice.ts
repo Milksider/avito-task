@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IssuesSlice } from './types';
 import { Issue } from '@/app/types/Issues';
 import { fetchIssuesList } from '@/app/providers/store/slices/IssuesSlice/api/fetchIssuesList';
@@ -16,7 +16,7 @@ const initialState: IssuesSlice = {
     isLoading: false,
     isError: false,
     searchQuery: '',
-    filterPriority: '',
+    filterStatus: '',
     filterBoard: null,
     ids: [],
     entities: {},
@@ -29,11 +29,21 @@ const issueSlice = createSlice({
         setSearchQuery: (state, action) => {
             state.searchQuery = action.payload;
         },
-        setFilterPriority: (state, action) => {
-            state.filterPriority = action.payload;
+        setFilterStatus: (state, action) => {
+            state.filterStatus = action.payload;
         },
         setFilterBoard: (state, action) => {
             state.filterBoard = action.payload;
+        },
+        addIssue: (state, action: PayloadAction<Issue>) => {
+            issuesAdapter.addOne(state, action.payload);
+            state.ids = [action.payload.id, ...state.ids.filter(id => id !== action.payload.id)];
+        },
+        updateIssue: (state, action: PayloadAction<Issue>) => {
+            issuesAdapter.updateOne(state, {
+                id: action.payload.id,
+                changes: action.payload,
+            });
         },
     },
     extraReducers: (builder) => {
@@ -57,7 +67,7 @@ const issueSlice = createSlice({
 });
 
 export const {
-    setSearchQuery, setFilterPriority, setFilterBoard
+    setSearchQuery, setFilterStatus, setFilterBoard, addIssue, updateIssue
 } = issueSlice.actions;
 
 export default issueSlice.reducer;

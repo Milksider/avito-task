@@ -10,8 +10,10 @@ type BoardProps = {
 }
 
 export const Board = ({taskCount,id,name,description}: BoardProps) => {
+    const hrefToDetailPage = `/boards/${id}`;
+
     return (
-        <Link to={'/'}>
+        <Link to={hrefToDetailPage}>
             <Box sx={styles.wrapper}>
                 <Box sx={styles.title}>{name}</Box>
                 <Box sx={styles.text}>{description}</Box>

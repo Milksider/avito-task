@@ -1,20 +1,23 @@
 import { Box, Button, Input, Menu, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { setFilterPriority, setSearchQuery } from '@/app/providers/store/slices/IssuesSlice/issuesSlice';
+import { setFilterBoard, setFilterStatus, setSearchQuery } from '@/app/providers/store/slices/IssuesSlice/issuesSlice';
 import { useAppDispatch } from '@/shared/hooks';
 import React from 'react';
-import { Priority } from '@/app/types';
 import { useSelector } from 'react-redux';
-import { selectFilterBoard, selectFilterPriority, selectSearchQuery } from '@/app/providers/store/slices/IssuesSlice/selectors';
+import { selectFilterBoard, selectFilterStatus, selectSearchQuery } from '@/app/providers/store/slices/IssuesSlice/selectors';
 import * as styles from './SearchPanel.sx';
+import { useBoardsList } from '@/app/hooks/useBoardsList';
+import { Statuses } from '@/app/types/global';
+import { getStatusString } from '@/app/helpers';
 
 export const SearchPanel = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     const dispatch = useAppDispatch();
-    const filterPriority = useSelector(selectFilterPriority);
+    const filterStatus = useSelector(selectFilterStatus);
     const filterBoard = useSelector(selectFilterBoard);
     const searchQuery = useSelector(selectSearchQuery);
+    const boards = useBoardsList();
 
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
@@ -27,26 +30,31 @@ export const SearchPanel = () => {
         dispatch(setSearchQuery(event.target.value))
     }
 
-    const handleFilter = (event: SelectChangeEvent<unknown>) => {
-        dispatch(setFilterPriority(event.target.value || null))
+    const handleFilterPriority = (event: SelectChangeEvent<unknown>) => {
+        dispatch(setFilterStatus(event.target.value || null))
     }
+    const handleFilterBoard = (event: SelectChangeEvent<unknown>) => {
+        dispatch(setFilterBoard(event.target.value || null))
+    }
+
 
     return (
         <Box sx={styles.wrapper}>
             <Input
                 value={searchQuery}
-                placeholder="Поиск по названию"
+                placeholder="Поиск по названию/исполнителю"
                 onChange={handleSearch}
-                sx={styles.defaultStyles}
+                sx={styles.input}
             />
 
-            <Box sx={styles.defaultStyles}>
+            <Box sx={styles.filtersButton}>
                 <Button
                     id="basic-button"
                     aria-controls={open ? 'basic-menu' : undefined}
                     aria-haspopup="true"
                     aria-expanded={open ? 'true' : undefined}
                     onClick={handleClick}
+                    sx={styles.triggerButton}
                 >
                     Фильтры
                 </Button>
@@ -55,6 +63,7 @@ export const SearchPanel = () => {
                     anchorEl={anchorEl}
                     open={open}
                     onClose={handleClose}
+                    sx={styles.menu}
                     slotProps={{
                         list: {
                             'aria-labelledby': 'basic-button',
@@ -66,15 +75,15 @@ export const SearchPanel = () => {
                             Фильтрация по приоритетности
                             <Select
                                 labelId="filterSelect"
-                                value={filterPriority}
-                                onChange={handleFilter}
+                                value={filterStatus}
+                                onChange={handleFilterPriority}
                                 variant="outlined"
                                 sx={styles.select}
                             >
                                 <MenuItem value=''>Сбросить фильтр</MenuItem>
-                                <MenuItem value={Priority.LOW}>Низкий приоритет</MenuItem>
-                                <MenuItem value={Priority.MEDIUM}>Средний приоритет</MenuItem>
-                                <MenuItem value={Priority.HIGH}>Высокий приоритет</MenuItem>
+                                <MenuItem value={Statuses.BACKLOG}>{getStatusString(Statuses.BACKLOG)}</MenuItem>
+                                <MenuItem value={Statuses.IN_PROGRESS}>{getStatusString(Statuses.IN_PROGRESS)}</MenuItem>
+                                <MenuItem value={Statuses.DONE}>{getStatusString(Statuses.DONE)}</MenuItem>
                             </Select>
                         </Box>
                     </MenuItem>
@@ -84,14 +93,12 @@ export const SearchPanel = () => {
                             <Select
                                 labelId="filterSelect"
                                 value={filterBoard}
-                                onChange={handleFilter}
+                                onChange={handleFilterBoard}
                                 variant="outlined"
                                 sx={styles.select}
                             >
                                 <MenuItem value=''>Сбросить фильтр</MenuItem>
-                                <MenuItem value={Priority.LOW}>Низкий приоритет</MenuItem>
-                                <MenuItem value={Priority.MEDIUM}>Средний приоритет</MenuItem>
-                                <MenuItem value={Priority.HIGH}>Высокий приоритет</MenuItem>
+                                {boards.map(board => <MenuItem value={board.id}>{board.name}</MenuItem>)}
                             </Select>
                         </Box>
                     </MenuItem>

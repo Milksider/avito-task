@@ -1,10 +1,15 @@
+import { borderColor, darkBg, fontColor, secondaryFontColor } from '@/app/styles/variables';
+
 export const wrapper = {
     width: '368px',
     height: '120px',
-    backgroundColor: 'white',
+    minHeight: '120px',
+    backgroundColor: darkBg,
     borderRadius: '8px',
     padding: '8px',
-    border: '1px solid #3a383f',
+    border: '1px solid',
+    borderColor: borderColor,
+    cursor: 'pointer',
 };
 
 export const content = {
@@ -37,6 +42,7 @@ export const details = {
 
 export const detailsItem = {
     fontSize: '14px',
+    color: secondaryFontColor,
 }
 
 export const priorityWrapper = {
@@ -44,6 +50,7 @@ export const priorityWrapper = {
     alignItems: 'center',
     gap: '5px',
     fontSize: '14px',
+    color: fontColor,
 }
 
 export const priority = (priority: string) => {
@@ -54,10 +61,10 @@ export const priority = (priority: string) => {
         fontSize: '12px',
         padding: '2px 6px',
         borderRadius: '8px',
-        color: 'white',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        color: fontColor,
     };
 
     switch (priority) {
@@ -77,5 +84,6 @@ export const priority = (priority: string) => {
 
 export const title = {
     fontSize: '14px',
-    fontWeight: '600'
+    fontWeight: '600',
+    color: fontColor,
 }

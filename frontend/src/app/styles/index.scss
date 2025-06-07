@@ -4,11 +4,14 @@
 body {
   font: var(--font-m);
   color: var(--primary-color);
+  background-color: #18171d;
 }
 
 .app {
   min-height: 100vh;
   background: var(--bg-color);
+  display: flex;
+  flex-direction: column;
 }
 
 .content-page {
@@ -16,8 +19,11 @@ body {
 }
 
 .page-wrapper {
-  flex-grow: 1;
+  flex: 1;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background: #18171d;
 }
 
 a {

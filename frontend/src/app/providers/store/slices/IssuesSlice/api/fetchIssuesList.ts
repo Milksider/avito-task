@@ -10,7 +10,7 @@ export const fetchIssuesList = createAsyncThunk<GetIssues, FetchIssuesProps, Thu
 
         try {
             const response = await apiClient.get<GetIssues>(
-                `issues`,
+                `tasks`,
             );
 
             if (!response.data) {

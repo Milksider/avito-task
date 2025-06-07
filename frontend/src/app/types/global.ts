@@ -5,3 +5,9 @@ export enum Priority {
 }
 
 export type IssueStatus = 'InProgress' | 'Backlog' | 'Done';
+
+export enum Statuses {
+    IN_PROGRESS = 'InProgress',
+    BACKLOG = 'Backlog',
+    DONE = 'Done'
+}

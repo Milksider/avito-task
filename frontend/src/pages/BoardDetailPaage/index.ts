@@ -1,1 +1,1 @@
-export {BoardDetailPage} from './ui/BoardDetailPage';
+export {BoardsDetailPageAsync as BoardDetailPage} from './ui/BoardsDetailPage.async';

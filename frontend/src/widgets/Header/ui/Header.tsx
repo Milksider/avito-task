@@ -1,49 +1,58 @@
-import * as styles from './header.module.scss';
+import * as styles from './Header.sx';
 import { NavLink } from 'react-router-dom';
-import { Button } from '@mui/material';
-import { CreateTaskModal } from '@/widgets/CreateTaskModal';
-import { useState } from 'react';
+import { Box, Button } from '@mui/material';
+import { useAppDispatch } from '@/shared/hooks';
+import { toggleCreateIssueModal } from '@/app/providers/store/slices/CreateIssueModalSlice/createIssueModalSlice';
+import AddIcon from '@mui/icons-material/Add';
 
 export const Header = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const dispatch = useAppDispatch();
 
-    const toggleModal = () => {
-        setIsModalOpen(prev => !prev);
+    const openCreateIssueModal = () => {
+        dispatch(toggleCreateIssueModal({
+            isOpen: true,
+            issueData: null,
+        }))
     }
 
     return (
         <>
-            <header className={styles.header}>
-                <div>
-                    <nav className={styles.nav}>
-                        <ul className={styles.navList}>
-                            <li className={styles.navItem}>
+            <Box component='header' sx={styles.header}>
+                <Box>
+                    <Box component='nav' sx={styles.nav}>
+                        <Box component='ul' sx={styles.navList}>
+                            <Box component='li' sx={styles.navItem(true)}>
                                 <NavLink
-                                    className={styles.navLink}
                                     to='/issues'
+                                    style={({ isActive }) => ({
+                                        color: isActive ? '#ececef' : '#3a383f',
+                                    })}
                                 >
                                     Список задач
                                 </NavLink>
-                            </li>
-                            <li className={styles.navItem}>
+                            </Box>
+                            <Box component='li' sx={styles.navItem(true)}>
                                 <NavLink
-                                    className={styles.navLink}
                                     to='/boards'
+                                    style={({ isActive }) => ({
+                                        color: isActive ? '#ececef' : '#3a383f',
+                                    })}
                                 >
                                     Список досок
                                 </NavLink>
-                            </li>
-                        </ul>
+                            </Box>
+                        </Box>
                         <Button
                             variant="outlined"
-                            onClick={toggleModal}
+                            onClick={openCreateIssueModal}
+                            sx={styles.createButton}
                         >
-                            Создать задачу
+                            <Box sx={styles.btnText} >Создать задачу</Box>
+                            <AddIcon sx={styles.btnIcon} />
                         </Button>
-                    </nav>
-                </div>
-            </header>
-            <CreateTaskModal isOpen={isModalOpen} onClose={toggleModal} />
+                    </Box>
+                </Box>
+            </Box>
         </>
     );
 };

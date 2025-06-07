@@ -1,15 +1,29 @@
+import { borderColor, BREAKPOINTS, fontColor, lightBg, secondaryFontColor } from '@/app/styles/variables';
+
 export const wrapper = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+
+    '& *': {
+        color: `${fontColor} !important`,
+        borderColor: `${borderColor} !important`,
+    }
 };
 
 export const content = {
     width: '600px',
     height: "auto",
-    backgroundColor: 'white',
+    backgroundColor: lightBg,
     borderRadius: '16px',
     padding: '16px',
+
+    [`@media (max-width:${BREAKPOINTS.sm}px)`]: {
+        width: 'auto',
+        height: '660px',
+        overflowY: 'auto',
+        scrollbarWidth: 'none',
+    }
 };
 
 export const title = {
@@ -17,6 +31,7 @@ export const title = {
     lineHeight: '18px',
     fontWeight: '600',
     textAlign: 'center',
+    color: fontColor,
 }
 
 export const formWrapper = {
@@ -29,16 +44,22 @@ export const formWrapper = {
 }
 
 export const input = {
-    width: '320px'
+    width: '320px',
 }
 
 export const submitButton = {
     width: '320px',
     marginTop: '20px',
+    border: '1px solid',
+    borderColor: borderColor,
+
+    '&:disabled': {
+        color: `${secondaryFontColor} !important`
+    }
 }
 
 export const textarea = {
-    backgroundColor: 'white',
     width: '320px',
-    borderColor: 'rgba(0, 0, 0, 0.23)',
+    borderColor: borderColor,
+    backgroundColor: 'transparent',
 }
