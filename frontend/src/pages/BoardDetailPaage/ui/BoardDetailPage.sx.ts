@@ -6,6 +6,7 @@ export const page = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'flex-start',
+    flex: '1',
 }
 
 export const wrapper = {

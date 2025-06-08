@@ -54,12 +54,12 @@ export const CreateTaskModal = () => {
     } = useFormik<CreateIssueFields>({
         validationSchema,
         initialValues: {
-            assigneeId: draftData?.assigneeId || issueData?.assignee.id || null,
-            boardId: draftData?.boardId || Number(boardId) || issueData?.boardId || null,
-            description: draftData?.description || issueData?.description || '',
-            priority: draftData?.priority || issueData?.priority || Priority.LOW,
-            title: draftData?.title || issueData?.title || '',
-            status: draftData?.status ||issueData?.status || 'Backlog',
+            assigneeId: issueData?.assignee.id || draftData?.assigneeId || null,
+            boardId: Number(boardId) || issueData?.boardId || draftData?.boardId || null,
+            description: issueData?.description || draftData?.description || '',
+            priority: issueData?.priority || draftData?.priority || Priority.LOW,
+            title: issueData?.title || draftData?.title || '',
+            status: issueData?.status || draftData?.status || 'Backlog',
         },
         onSubmit: async () => {
             setIsError(false);
